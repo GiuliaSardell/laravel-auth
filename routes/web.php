@@ -14,9 +14,20 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', function () {
-    return view('welcome');
+    return view('guest.welcome');
 });
 
 Auth::routes();
 
-Route::get('/home', 'HomeController@index')->name('home');
+Route::middleware('auth')
+    ->namespace('admin')
+    ->name('admin.')
+    ->prefix('admin')
+    ->group(function(){
+        Route::get('/', 'HomeController@index')->name('index');
+        
+        // qui poi ci saranno tutte le altre rotte di admin protette da psw
+
+    });
+
+
