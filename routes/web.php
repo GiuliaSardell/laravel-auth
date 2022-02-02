@@ -25,6 +25,8 @@ Route::middleware('auth')
     ->prefix('admin')
     ->group(function(){
         Route::get('/', 'HomeController@index')->name('index');
+
+        Route::resource('/post', 'PostController');
         
         // qui poi ci saranno tutte le altre rotte di admin protette da psw
 
