@@ -22,6 +22,7 @@
               <tr>
                 <th scope="row">{{$post->id}}</th>
                 <td>{{$post->title}}</td>
+                <td>{{$post->content}}</td>
                 <td>XXX</td>
               </tr> 
             @endforeach

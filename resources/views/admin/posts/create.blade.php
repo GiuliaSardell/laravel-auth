@@ -26,11 +26,11 @@
       <label for="text" class="form-label">Testo</label>
       <textarea type="text" 
     
-      name="title" class="form-control"
+      name="content" class="form-control"
       id="title" placeholder="Testo del post"></textarea>
     </div>
 
-    
+
     <button type="submit" class="btn btn-primary my-5 mx-2">Invia</button>
     <button type="reset" class="btn btn-danger my-5 mx-2">Reset</button>
     
