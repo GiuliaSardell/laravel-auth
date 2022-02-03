@@ -1,12 +1,12 @@
 @extends('layouts.admin')
 
-@section('title') | Nuovo post @endsection
+@section('title') | Modifica post @endsection
 
 @section('content')
 <div class="container">
     
   <h1>
-    Nuovo post
+    Modifica di : {{$post->title}}
   </h1>
 
   @if ($errors->any())
@@ -21,14 +21,15 @@
 
   
   <form style="width:300px" class="my-5"
-  action="{{ route('admin.post.store') }}"
+  action="{{ route('admin.post.update', $post) }}"
   method="POST">
   @csrf
+  @method('GET')
     
     <div class="mb-3">
       <label for="title" class="form-label">Titolo</label>
       <input type="text" 
-      value="{{old('title')}}"
+      value="{{old('title', $post->title)}}"
       name="title" class="form-control"
       id="title" placeholder="Titolo">
     </div>
@@ -39,7 +40,7 @@
     
       name="content" class="form-control"
       
-      id="content" placeholder="Testo del post">{{old('content')}}</textarea>
+      id="content" placeholder="Testo del post">{{old('content', $post->content)}}</textarea>
     </div>
 
 

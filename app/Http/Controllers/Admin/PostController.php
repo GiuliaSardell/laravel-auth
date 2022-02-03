@@ -40,13 +40,27 @@ class PostController extends Controller
      */
     public function store(Request $request)
     {
+
+        $request->validate(
+            [
+                'title'=> 'required|max:255|min:2',
+                'content' => 'required|min:2',
+
+            ],
+            [
+                'title.required'=> "Questo è un campo obbligatorio",
+                'title.max' => "Questo campo non può superare i :max caratteri",
+                'title.min' => "Questo campo deve essere di almeno :min caratteri",
+                'content.required' => "Questo campo è obbligatorio",
+                'content.min' => "Questo campo deve essere di almeno :min caratteri"
+            ]
+        );
+
         $data = $request->all();
 
         $new_post = new Post();
         // $new_post->title = $data['title'];
         // $new_post->content = $data['content'];
-        
-
         
 
         $data['slug'] = Post::generateSlug($data['title']);
@@ -68,7 +82,13 @@ class PostController extends Controller
     {
         $posts = Post::find($id);
 
-        return view('admin.posts.index', compact('posts'));
+        if($posts){
+            return view('admin.posts.index', compact('posts'));
+        }
+        abort(404, 'Errore nella ricerca del post');
+
+
+        
     }
 
     /**
@@ -77,9 +97,10 @@ class PostController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit(Post $post)
     {
-        //
+        return view('admin.posts.edit', compact('post'));
+        
     }
 
     /**
@@ -89,9 +110,39 @@ class PostController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, Post $post)
     {
-        //
+        // $data = $request ->all();
+        // $post->update($data);
+
+        // return redirect()->route('admin.post.index', $post);
+
+        $request->validate(
+            [
+                'title'=> 'required|max:255|min:2',
+                'content' => 'required|min:2',
+
+            ],
+            [
+                'title.required'=> "Questo è un campo obbligatorio",
+                'title.max' => "Questo campo non può superare i :max caratteri",
+                'title.min' => "Questo campo deve essere di almeno :min caratteri",
+                'content.required' => "Questo campo è obbligatorio",
+                'content.min' => "Questo campo deve essere di almeno :min caratteri"
+            ]
+        );
+
+        $data = $request->all();
+
+
+        $data['slug'] = Post::generateSlug($data['title']);
+
+        $post->update($data);
+
+
+
+        return redirect()->route('admin.post.index', $post);
+
     }
 
     /**
