@@ -31,7 +31,16 @@
                    </button>
                 </td>
                 <td>
-                  <button type="button" class="btn btn-danger">Elimina</button>
+
+                  <form 
+                  action="{{route('admin.post.destroy', $post)}}" method="POST"
+                  onsubmit = "return confirm('Confermi di eliminare {{$post->title}}?')">
+                  @csrf
+                  @method('DELETE')
+                    <button type="submit" class="btn btn-danger">Elimina</button>
+                  </form>
+                  
+
                 </td>
               </tr> 
             @endforeach
